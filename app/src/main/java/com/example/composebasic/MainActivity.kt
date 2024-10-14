@@ -48,68 +48,74 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    var x by remember { mutableStateOf(0) }
+    var x = remember { mutableStateOf(0) }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = modifier.fillMaxSize()
     ) {
+
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(16.dp) // Adding padding to the column
+            modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
+            horizontalAlignment = Alignment.Start
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(bottom = 16.dp) // Space between rows
+
+            Button(
+                onClick = {
+                    x.value = 0
+                },
+                modifier = Modifier.padding(bottom = 16.dp)
             ) {
-                Button(onClick = { x = 0 }) {
-                    Text("歸零")
-                }
+                Text("歸零")
                 Image(
-                    painter = painterResource(id = R.drawable.ghost),
-                    contentDescription = "嚇你",
-                    modifier = Modifier.size(20.dp)
+                    painter = painterResource(id = R.drawable.shock),
+                    contentDescription = "媽媽咪呀",
+                    modifier = modifier.size(20.dp)
                 )
             }
 
             Text(
-                text = x.toString(),
+                text = x.value.toString(),
                 fontSize = 50.sp,
-                modifier = modifier
-                    .clickable { x++ }
-                    .padding(16.dp) // Padding around the text
+                modifier = modifier.clickable {
+                    x.value++
+                }
             )
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(top = 16.dp) // Space between rows
+
+            Button(
+                onClick = { x.value *= 2 },
+                modifier = Modifier.padding(top = 16.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.author),
-                    color = Color.Blue,
-                    fontSize = 50.sp,
-                    fontFamily = FontFamily(Font(R.font.hand)),
-                    modifier = Modifier.padding(end = 8.dp) // Space between text and image
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.kiss),
-                    contentDescription = "小新",
-                    alpha = 0.8f,
-                    modifier = Modifier.clip(CircleShape).size(50.dp) // Specifying size
-                )
+                Text("乘以2")
             }
 
-            Image(
-                painter = painterResource(id = R.drawable.shock),
-                contentDescription = "媽媽咪呀",
-                alpha = 0.7f,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(100.dp) // Specifying size for background image
-                    .padding(top = 32.dp) // Space from the other components
+            Text(
+                text = stringResource(R.string.author),
+                color = Color.Black,
+                fontSize = 50.sp,
+                fontFamily = FontFamily(Font(R.font.hand)),
+                modifier = modifier.padding(top = 16.dp)
             )
         }
+
+        Image(
+            painter = painterResource(id = R.drawable.kiss),
+            contentDescription = "啾咪",
+            alpha = 0.7f,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .clip(CircleShape)
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.ghost),
+            contentDescription = "嚇你",
+            alpha = 0.7f,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .clip(CircleShape)
+                .padding(bottom = 16.dp)
+        )
     }
 }
 
